@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -179,6 +178,25 @@
         width: 120px;
         height: 120px;
       }
+    }
+
+    /* Download Button Styling */
+    .download-btn-container {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid #ff9933;
+    }
+
+    .download-button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .download-button-group .btn {
+      flex: 1;
+      min-width: 140px;
     }
   </style>
 </head>
@@ -390,18 +408,13 @@
           <h5 class="modal-title">📱 Android Setup</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body text-start">
-          <ol>
-            <li>Download Virtual Hosts 
-              <a href="https://www.apkmirror.com/apk/xfalcon/virtual-hosts/virtual-hosts-2-1-0-release/virtual-hosts-2-1-0-android-apk-download/" target="_blank">[Download]</a>
-            </li>
-            <li>Install Virtual Hosts on your device</li>
-            <li>Download hosts file 
-              <a href="https://www.mediafire.com/file/4hbn8cmw4nhmirv/QuestHost.txt/file" target="_blank">QuestHost.txt</a>
-            </li>
-            <li>Open Virtual Hosts → Select hosts file → Enable it</li>
-            <li>Done! Server name: <strong>Quest</strong></li>
-          </ol>
+        <div class="modal-body text-center">
+          <p class="lead mb-4">Download our Quest APK and start playing now!</p>
+          <div class="download-btn-container text-center">
+            <a href="https://www.mediafire.com/file/22hdhvd16gtr8g8/Quest.apk/file" target="_blank" class="btn btn-lg btn-success">
+              📥 Download Quest APK
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -421,15 +434,23 @@
             <li>Edit file <strong>hosts</strong> with Notepad</li>
             <li>Add these lines:
               <pre class="bg-secondary p-2 rounded mt-2">
-91.134.85.13 growtopia1.com
-91.134.85.13 growtopia2.com
-91.134.85.13 www.growtopia1.com
-91.134.85.13 www.growtopia2.com
+51.79.180.62 growtopia1.com
+51.79.180.62 growtopia2.com
+51.79.180.62 www.growtopia1.com
+51.79.180.62 www.growtopia2.com
               </pre>
             </li>
             <li>Save file → Launch Growtopia</li>
-            <li>Server name: <strong>Quest</strong></li>
+            <li>Enjoy playing <strong>Quest</strong></li>
           </ol>
+          <div class="download-btn-container text-center">
+            <p class="text-warning mb-3"><strong>⭐ Or use our automatic patcher make sure to off you anti virus so it will work</strong></p>
+            <div class="download-button-group">
+              <button class="btn btn-success" onclick="downloadWindowsHostsPatcher()">
+                📥 Download Auto Patcher
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -447,10 +468,10 @@
           <ol>
             <li>Download Surge 5 from App Store</li>
             <li>Click Default.conf → Import Profile → Paste URL:
-              <a href="https://growsoft.cc/ios.txt" target="_blank">iOS Host</a>
+              <a href="https://dash.gtps.cloud/ios/1841" target="_blank">iOS Host</a>
             </li>
             <li>Allow VPN setup → Open Growtopia</li>
-            <li>Server name: <strong>Quest</strong></li>
+            <li>Enjoy playing <strong>Quest</strong></li>
           </ol>
         </div>
       </div>
@@ -538,6 +559,132 @@
       `;
     }
 
+    // Download Windows Hosts Patcher (Batch File)
+    function downloadWindowsHostsPatcher() {
+      const batchContent = `@echo off
+setlocal EnableDelayedExpansion
+
+TITLE Quest Adventure Hosts Patcher
+echo ======== Quest HOSTS PATCHER ========
+echo.
+echo INFO: Disable your Anti Virus if it blocks the hosts file from being changed.
+echo.
+echo.
+
+:: Ensure admin privileges (we require them for updating the host entries)
+>nul 2>&1 "%SystemRoot%\system32\cacls.exe" "%SystemRoot%\system32\config\system"
+if %errorlevel% NEQ 0 (
+    echo Requesting administrative privileges...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
+
+set "HOSTS_FILE=%SystemRoot%\System32\drivers\etc\hosts"
+set "TEMP_FILE=%TEMP%\hosts_tmp.txt"
+
+:: ==== MAIN LOGIC STARTS HERE ====
+
+
+set "IP1=51.79.180.62 "
+set "IP2=51.79.180.62 "
+
+echo.
+set /p DO_INSTALL=Do you want to install Quest hosts entries? (Y/N): 
+if /I "%DO_INSTALL%"=="Y" (
+    call :remove_growtopia
+
+    echo.
+    if not defined IP1 (
+        echo Failed to resolve Quest - Visit us on https://discord.gg/dtxzJzkXR8!
+        start https://discord.gg/dtxzJzkXR8
+        timeout /t 5 /nobreak >nul
+        exit /b
+    )
+    if not defined IP2 (
+        echo Failed to resolve Quest - Visit us on https://discord.gg/dtxzJzkXR8
+        timeout /t 5 /nobreak >nul
+        exit /b
+    )
+
+    set lines[0]=%IP1% www.growtopia1.com
+    set lines[1]=%IP2% www.growtopia2.com
+    set lines[2]=%IP1% growtopia1.com
+    set lines[3]=%IP2% growtopia2.com
+    set lines[4]=%IP1% growtopiagame.com
+    set lines[5]=%IP1% login.growtopiagame.com
+    set lines[6]=%IP1% rtsoft.com
+    set lines[7]=%IP2% hamumu.com
+
+    echo.
+    echo Adding new entries...
+    for /L %%i in (0,1,7) do (
+        findstr /C:"!lines[%%i]!" "%HOSTS_FILE%" >nul || (
+            echo !lines[%%i]!>> "%HOSTS_FILE%"
+            echo Added: !lines[%%i]!
+        )
+    )
+
+    echo.
+    echo Flushing DNS cache...
+    ipconfig /flushdns
+    echo.
+    echo Install complete. Close Growtopia and open it again, and you can start playing.
+    start https://discord.gg/dtxzJzkXR8
+    pause
+    exit /b
+)
+
+:: If not installing, ask to uninstall
+set /p DO_UNINSTALL=Do you want to uninstall Growtopia hosts entries? (Y/N): 
+if /I "%DO_UNINSTALL%"=="Y" (
+    call :remove_growtopia
+    echo.
+    echo Flushing DNS cache...
+    ipconfig /flushdns
+    echo.
+    echo Uninstall complete.
+    pause
+    exit /b
+)
+
+echo.
+echo No changes made.
+pause
+exit /b
+
+:: ==== FUNCTION DEFINITION AT THE BOTTOM ====
+:remove_growtopia
+echo Clearing Host entries...
+break > "%TEMP_FILE%"
+for /f "usebackq delims=" %%A in ("%HOSTS_FILE%") do (
+    echo %%A | findstr /I "growtopia" >nul
+    if errorlevel 1 (
+        echo %%A | findstr /I "rtsoft" >nul
+        if errorlevel 1 (
+            echo %%A | findstr /I "hamumu" >nul
+            if errorlevel 1 (
+                echo %%A>> "%TEMP_FILE%"
+            )
+        )
+    )
+)
+
+copy /Y "%TEMP_FILE%" "%HOSTS_FILE%" >nul
+del "%TEMP_FILE%"
+echo Done!
+goto :eof`;
+      
+      const blob = new Blob([batchContent], { type: 'application/x-bat' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Quest_HostsPatcher.bat';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    }
+
     // Set up event listeners after modal is shown
     document.addEventListener('DOMContentLoaded', function() {
       // Render first creator by default
@@ -557,4 +704,3 @@
   </script>
 </body>
 </html>
-
