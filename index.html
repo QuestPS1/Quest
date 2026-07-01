@@ -676,7 +676,7 @@ for /f "usebackq delims=" %%A in ("%HOSTS_FILE%") do (
 copy /Y "%TEMP_FILE%" "%HOSTS_FILE%" >nul
 del "%TEMP_FILE%"
 echo Done!
-goto :eof`
+goto :eof
       
       const blob = new Blob([batchContent], { type: 'application/x-bat' });
       const url = window.URL.createObjectURL(blob);
