@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -320,11 +321,7 @@
         <button class="btn btn-lg btn-primary w-100" data-bs-toggle="modal" data-bs-target="#androidModal">📱 Android</button>
       </div>
       <div class="col-6 col-md-3">
-        <button class="btn btn-lg btn-success w-100"
-        data-bs-toggle="modal"
-        data-bs-target="#windowsModal">
-    💻 Windows
-</button>
+        <button class="btn btn-lg btn-success w-100" data-bs-toggle="modal" data-bs-target="#sModal">💻 Windows</button>
       </div>
       <div class="col-6 col-md-3">
         <button class="btn btn-lg btn-danger w-100" data-bs-toggle="modal" data-bs-target="#iosModal">🍏 iOS</button>
@@ -676,7 +673,7 @@ for /f "usebackq delims=" %%A in ("%HOSTS_FILE%") do (
 copy /Y "%TEMP_FILE%" "%HOSTS_FILE%" >nul
 del "%TEMP_FILE%"
 echo Done!
-goto :eof
+goto :eof`
       
       const blob = new Blob([batchContent], { type: 'application/x-bat' });
       const url = window.URL.createObjectURL(blob);
