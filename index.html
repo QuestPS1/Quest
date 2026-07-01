@@ -320,7 +320,7 @@
         <button class="btn btn-lg btn-primary w-100" data-bs-toggle="modal" data-bs-target="#androidModal">📱 Android</button>
       </div>
       <div class="col-6 col-md-3">
-        <button class="btn btn-lg btn-success w-100" data-bs-toggle="modal" data-bs-target="#windowsModal">💻 Windows</button>
+        <button class="btn btn-lg btn-success w-100" data-bs-toggle="modal" data-bs-target="#sModal">💻 Windows</button>
       </div>
       <div class="col-6 col-md-3">
         <button class="btn btn-lg btn-danger w-100" data-bs-toggle="modal" data-bs-target="#iosModal">🍏 iOS</button>
@@ -564,8 +564,8 @@
       const batchContent = `@echo off
 setlocal EnableDelayedExpansion
 
-TITLE Quest Adventure Hosts Patcher
-echo ======== Quest HOSTS PATCHER ========
+TITLE Quest Hosts Patcher
+echo ======== Quest Adventure HOSTS PATCHER ========
 echo.
 echo INFO: Disable your Anti Virus if it blocks the hosts file from being changed.
 echo.
@@ -584,24 +584,24 @@ set "TEMP_FILE=%TEMP%\hosts_tmp.txt"
 
 :: ==== MAIN LOGIC STARTS HERE ====
 
-
-set "IP1=51.79.180.62 "
-set "IP2=51.79.180.62 "
+set "IP1=51.79.180.62"
+set "IP2=51.79.180.62"
 
 echo.
-set /p DO_INSTALL=Do you want to install Quest hosts entries? (Y/N): 
+set /p DO_INSTALL=Do you want to install QuestPS hosts entries? (Y/N): 
 if /I "%DO_INSTALL%"=="Y" (
     call :remove_growtopia
 
     echo.
     if not defined IP1 (
-        echo Failed to resolve Quest - Visit us on https://discord.gg/dtxzJzkXR8!
-        start https://discord.gg/dtxzJzkXR8
+        echo Failed to resolve creativeps.eu -
+        start https://discord.gg/4jpssdCb4e
         timeout /t 5 /nobreak >nul
         exit /b
     )
     if not defined IP2 (
-        echo Failed to resolve Quest - Visit us on https://discord.gg/dtxzJzkXR8
+        echo Failed to resolve alt.creativeps.eu -
+        start https://discord.gg/4jpssdCb4e
         timeout /t 5 /nobreak >nul
         exit /b
     )
@@ -629,7 +629,7 @@ if /I "%DO_INSTALL%"=="Y" (
     ipconfig /flushdns
     echo.
     echo Install complete. Close Growtopia and open it again, and you can start playing.
-    start https://discord.gg/dtxzJzkXR8
+    start https://discord.gg/4jpssdCb4e
     pause
     exit /b
 )
